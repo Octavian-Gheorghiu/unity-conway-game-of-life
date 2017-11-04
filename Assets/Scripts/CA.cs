@@ -12,7 +12,6 @@ public class CA : MonoBehaviour {
     public int rows = 20;
     public float spacing = 1.0f;
 
-
     // Use this for initialization
     void Start () {
         // Setup a new instance of the grid
