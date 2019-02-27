@@ -11,6 +11,9 @@ public class CA : MonoBehaviour {
     public int columns = 20;
     public int rows = 20;
     public float spacing = 1.0f;
+    public int starvation = 2;
+    public int overPopulation = 3;
+    public int birth = 3;
 
     // Use this for initialization
     void Start () {
@@ -79,17 +82,17 @@ public class CA : MonoBehaviour {
                 // Rule 1: for cells that are alive
                 if (currentCubeState == 1)
                 {
-                    if (neighborsCount < 2)
+                    if (neighborsCount < starvation)
                     {
                         grid[i, j].GetComponent<CA_Cube>().SetFutureState(0);
                         futureState = 0;
                     }
-                    if (neighborsCount == 2 || neighborsCount == 3)
+                    if (neighborsCount == starvation || neighborsCount == 3)
                     {
                         grid[i, j].GetComponent<CA_Cube>().SetFutureState(1);
                         futureState = 1;
                     }
-                    if (neighborsCount > 3)
+                    if (neighborsCount > overPopulation)
                     {
                         grid[i, j].GetComponent<CA_Cube>().SetFutureState(0);
                         futureState = 0;
@@ -99,7 +102,7 @@ public class CA : MonoBehaviour {
                 // Rule 2: for cells that are dead
                 if (currentCubeState == 0)
                 {
-                    if (neighborsCount == 3)
+                    if (neighborsCount == birth)
                     {
                         grid[i, j].GetComponent<CA_Cube>().SetFutureState(1);
                         futureState = 1;
