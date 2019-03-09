@@ -187,7 +187,7 @@ public class CA_History : MonoBehaviour {
         }
     }
 
-    // Get how nay cells are alive
+    // Get how many cells are alive
     public int GetAlive()
     {
         return alive;

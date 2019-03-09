@@ -10,6 +10,11 @@ public class GUI_Controller : MonoBehaviour {
 
     private void Update()
     {
+        // Handeling keyboard events
+        if(Input.GetKeyDown(KeyCode.Return)){
+            Debug.Log("Enter was pressed...maybe do someting!");
+            // Code to do someting
+        }
         // Load 2d CA
         if (Input.GetKeyDown("1"))
         {
@@ -45,6 +50,7 @@ public class GUI_Controller : MonoBehaviour {
         }
     }
 
+    // Function that handles screen dsiplays
     private void OnGUI()
     {
         // Set a label for our game
@@ -54,6 +60,10 @@ public class GUI_Controller : MonoBehaviour {
         // Set the population count 
         Scene scene = SceneManager.GetActiveScene();
         if (scene.name == "CA_2d")
+        {
+            score = GameObject.Find("caGrid").GetComponent<CA_Class>().GetAlive();
+        }
+        if (scene.name == "CA_2d_Class")
         {
             score = GameObject.Find("caGrid").GetComponent<CA>().GetAlive();
         }
