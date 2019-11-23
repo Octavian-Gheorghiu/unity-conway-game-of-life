@@ -7,11 +7,18 @@ public class CA_Cube_Class : MonoBehaviour {
     // Variables
     private int state = 0;
     private int futureState = 0;
+    public int age = 0;
+    public bool updateState = true;
+
+    // Getter and setter c#
 	
 	// Update is called once per frame
 	void Update () {
-        state = futureState;
-        DisplayCube();
+        if (updateState)
+        {
+            state = futureState;
+            DisplayCube();
+        }
 	}
 
     // Behaviours (Methods)
@@ -33,6 +40,19 @@ public class CA_Cube_Class : MonoBehaviour {
         }
     }
 
+    public void DisplayAge(Color _cubeColor)   
+    {
+        // Set the material property block to a colur assigned by the evaluator
+        MaterialPropertyBlock props = new MaterialPropertyBlock();
+        gameObject.GetComponent<MeshRenderer>().enabled = true;
+        props.SetColor("_Color", _cubeColor);
+
+        // Update the colour of the mesh
+        MeshRenderer renderer;
+        renderer = gameObject.GetComponent<MeshRenderer>();
+        renderer.SetPropertyBlock(props);
+    }
+
     // Methods to set the future state
     public void SetFutureState(int _futureState){
         futureState = _futureState;
@@ -51,5 +71,15 @@ public class CA_Cube_Class : MonoBehaviour {
     // Helpre methods to get the future state
     public int GetFutureState(){
         return futureState;
+    }
+
+    public int GetAge()
+    {
+        return age;
+    }
+
+    public void SetAge(int _age)
+    {
+        age = _age;
     }
 }

@@ -9,11 +9,13 @@ public class CA_History_Class : MonoBehaviour {
     private int recordedStates = 0;
     private GameObject caGridStatesHistory;
     private GameObject[,] grid;
+    private int[,] ageOfCells;
     private int alive = 0;
     public GameObject cubePrefab;
     public int columns = 20;
     public int rows = 20;
     public float spacing = 1.0f;
+    public Texture2D seedImage;
 
 	// Use this for initialization
 	void Start () {
@@ -48,6 +50,8 @@ public class CA_History_Class : MonoBehaviour {
     // Create the caGrid
     private void CreateGrid()
     {
+        // Random grid
+        /*
         grid = new GameObject[columns, rows];
         for (int i = 0; i < columns; i++)
         {
@@ -61,6 +65,34 @@ public class CA_History_Class : MonoBehaviour {
                 newObj.GetComponent<CA_Cube_Class>().SetState(Random.Range(0, 2)); // Assign a random type to the caCube
                 // Store the caCube in the data structure
                 grid[i, j] = newObj;
+            }
+        }
+        */
+
+        // Grid from image
+        grid = new GameObject[columns, rows];
+        for (int i = 0; i < columns; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                // Create a new caCube
+                Vector3 position = new Vector3(i * spacing, 0, j * spacing); // Unity Y axis is the Z axis
+                Quaternion rotation = Quaternion.identity;
+                GameObject newObj = Instantiate(cubePrefab, position, rotation);
+                newObj.transform.parent = gameObject.transform; // Attach the caCube to the caGrid
+                int state = (int) seedImage.GetPixel(i, j).grayscale;
+                newObj.GetComponent<CA_Cube_Class>().SetState(state);
+                // Store the caCube in the data structure
+                grid[i, j] = newObj;
+            }
+        }
+
+        ageOfCells = new int[columns, rows];
+        for (int i = 0; i < columns; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                ageOfCells[i, j] = 0;
             }
         }
     }
@@ -143,6 +175,8 @@ public class CA_History_Class : MonoBehaviour {
                     {
                         grid[i, j].GetComponent<CA_Cube_Class>().SetFutureState(1);
                         futureState = 1;
+                        ageOfCells[i, j]++;
+                        grid[i, j].GetComponent<CA_Cube_Class>().SetAge(ageOfCells[i, j]);
                     }
                     // I die if I have more than 3 neigbours
                     if (neigboursCount > 3)
@@ -159,6 +193,8 @@ public class CA_History_Class : MonoBehaviour {
                     {
                         grid[i, j].GetComponent<CA_Cube_Class>().SetFutureState(1);
                         futureState = 1;
+                        ageOfCells[i, j]++;
+                        grid[i, j].GetComponent<CA_Cube_Class>().SetAge(ageOfCells[i, j]);
                     }
                 }
 
@@ -184,7 +220,8 @@ public class CA_History_Class : MonoBehaviour {
                     // Optimise the cube by removing redundent components
                     Destroy(newCube.GetComponent<Rigidbody>());
                     Destroy(newCube.GetComponent<Collider>());
-                    Destroy(newCube.GetComponent<CA_Cube_Class>());
+                    // Destroy(newCube.GetComponent<CA_Cube_Class>());
+                    newCube.GetComponent<CA_Cube_Class>().updateState = false;
                     // Optimse the cube for GPU rendering
                     MaterialPropertyBlock props = new MaterialPropertyBlock();
                     props.SetColor("_Color", Color.black);
@@ -193,6 +230,8 @@ public class CA_History_Class : MonoBehaviour {
                     newCube.transform.Translate(Vector3.up * recordedStates);
                     // Parent the copied cube to the CA History game object
                     newCube.transform.parent = caGridStatesHistory.transform;
+                    // Copy age information
+                    newCube.GetComponent<CA_Cube_Class>().SetAge(ageOfCells[i,j]);
                 }
             }
         }

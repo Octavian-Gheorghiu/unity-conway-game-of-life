@@ -135,4 +135,10 @@ public class CA_Class : MonoBehaviour {
     public int GetAlive(){
         return alive;
     }
+
+    // Pass the grid to other objects
+    public GameObject[,] GetGridCubes()
+    {
+        return grid;
+    }
 }
