@@ -226,7 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152e30c9b1c7fa74ea64bd233249e961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  caGrid: {fileID: 1522369777}
 --- !u!4 &705339641
 Transform:
   m_ObjectHideFlags: 0
@@ -354,7 +353,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 23
+  orthographic size: 50
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -475,11 +474,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd0cb4b6dc567442d86c143c602b4657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noStatesToRecord: 10
+  noStatesToRecord: 50
   cubePrefab: {fileID: 1542304648673770, guid: 693d99910c263419890bd0ea00d50501, type: 2}
-  columns: 50
-  rows: 50
+  columns: 40
+  rows: 40
   spacing: 1
+  seedImage: {fileID: 2800000, guid: 2b03cc04948383443801c2dc929976a3, type: 3}
 --- !u!4 &1522369779
 Transform:
   m_ObjectHideFlags: 0

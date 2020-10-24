@@ -10,6 +10,7 @@ public class CA_Cube_Class : MonoBehaviour {
     public int age = 0;
     public bool updateState = true;
 
+
     // Getter and setter c#
 	
 	// Update is called once per frame
